@@ -1,7 +1,7 @@
 {
-  "name": "QUẢN LÝ NỘI THẤT NNA",
-  "short_name": "Nội thất NNA",
-  "description": "Quản lý dự án Phòng Nội thất NNA",
+  "name": "DNA-NT – Quản lý dự án Nội thất",
+  "short_name": "DNA-NT",
+  "description": "DNA-NT – Quản lý dự án Phòng Nội thất",
   "lang": "vi",
   "start_url": "./",
   "scope": "./",
