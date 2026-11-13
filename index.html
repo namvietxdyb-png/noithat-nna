@@ -40,8 +40,8 @@ const ua=navigator.userAgent,isIOS=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.tes
 const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
 let dp=null;const cai=document.getElementById('cai'),hd=document.getElementById('hd');
 let hide=false;try{hide=localStorage.getItem('cai_x')==='1'}catch(e){}
-if(!standalone&&!hide)setTimeout(()=>{cai.style.display='flex'},isIOS?1500:6000);
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;if(!standalone)cai.style.display='flex'});
+if(!standalone&&!hide&&isIOS)setTimeout(()=>{cai.style.display='flex'},1500);
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;if(!standalone&&!hide)cai.style.display='flex'});
 function huongDan(){const L=isIOS?(/CriOS|FxiOS|EdgiOS/.test(ua)?['Mở trang này bằng <b>Safari</b> (iPhone chỉ cài được từ Safari).','Bấm nút <b>Chia sẻ</b> ⬆ ở thanh dưới.','Kéo xuống, chọn <b>Thêm vào MH chính</b>, rồi bấm <b>Thêm</b>.']:['Bấm nút <b>Chia sẻ</b> ⬆ ở thanh dưới của Safari.','Kéo xuống, chọn <b>Thêm vào MH chính</b>.','Bấm <b>Thêm</b> ở góc trên bên phải.'])
   :isAnd?['Mở trang này bằng <b>Chrome</b>.','Bấm menu <b>⋮</b> ở góc trên bên phải.','Chọn <b>Cài đặt ứng dụng</b> hoặc <b>Thêm vào màn hình chính</b>, rồi bấm <b>Cài đặt</b>.']
   :['Mở trang này bằng <b>Chrome</b> hoặc <b>Edge</b>.','Bấm biểu tượng <b>cài đặt ⊕</b> ở cuối thanh địa chỉ (hoặc menu ⋮ → <b>Truyền, lưu và chia sẻ</b> → <b>Cài đặt trang dưới dạng ứng dụng</b>).','Bấm <b>Cài đặt</b>.'];
