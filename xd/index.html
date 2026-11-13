@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>DNA-XD – Quản lý dự án Xây dựng</title>
+<meta name="theme-color" content="#2a6688">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="DNA-XD">
+<style>
+html,body{margin:0;height:100%;background:#f3f4f2;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+#app{position:fixed;inset:0;width:100%;height:100%;border:0;background:transparent}
+#load{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#2a6688}
+#load img{width:112px;height:112px}
+#load b{font-size:15px;letter-spacing:.04em}
+#bar{width:140px;height:4px;border-radius:2px;background:#d6e3ea;overflow:hidden}
+#bar i{display:block;width:40%;height:100%;background:#2a6688;animation:m 1.1s ease-in-out infinite}
+@keyframes m{0%{transform:translateX(-100%)}100%{transform:translateX(260%)}}
+#cai{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));display:none;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:9}
+#cai img{width:40px;height:40px}#cai div{flex:1;font-size:14px;color:#1d2326}
+#cai button,#hd button{font:inherit;font-weight:700;border:0;border-radius:8px;padding:10px 14px;background:#2a6688;color:#fff;box-shadow:0 4px 0 #173c52}
+#cai .x{background:transparent;color:#5d686d;box-shadow:none;padding:10px 6px}
+#hd{position:fixed;inset:0;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.45);z-index:10;padding:12px}
+#hd>div{background:#fff;border-radius:14px;max-width:420px;width:100%;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));color:#1d2326;font-size:15px;line-height:1.5}
+#hd h3{margin:0 0 8px;font-size:17px;color:#2a6688}#hd ol{margin:0 0 14px;padding-left:22px}#hd li{margin:4px 0}
+</style>
+</head>
+<body>
+<div id="load"><img src="icon-192.png" alt=""><b>DNA-XD – Quản lý dự án Xây dựng</b><div id="bar"><i></i></div></div>
+<iframe id="app" title="DNA-XD – Quản lý dự án Xây dựng" src="https://script.google.com/macros/s/AKfycbyUF5PEQ1x_ARjSLG0eWt5GgnR0Dc7l0iu7_38hSgwP04iyl-K2s-llLC1ACkZDENx4Ag/exec" allow="web-share; clipboard-write; fullscreen"></iframe>
+<div id="cai"><img src="icon-192.png" alt=""><div><b>Cài app DNA-XD</b><br>Đưa biểu tượng ra màn hình chính</div><button id="caiBtn">Cài đặt</button><button class="x" id="caiX" aria-label="Đóng">✕</button></div>
+<div id="hd" role="dialog" aria-modal="true"><div><h3>Cài DNA-XD ra màn hình chính</h3><ol id="hdL"></ol><button id="hdOk">Đã hiểu</button></div></div>
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
+const ua=navigator.userAgent,isIOS=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1),isAnd=/Android/.test(ua);
+const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+let dp=null;const cai=document.getElementById('cai'),hd=document.getElementById('hd');
+let hide=false;try{hide=localStorage.getItem('cai_x_xd')==='1'}catch(e){}
+if(!standalone&&!hide)setTimeout(()=>{cai.style.display='flex'},1500);
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;if(!standalone)cai.style.display='flex'});
+function huongDan(){const L=isIOS?(/CriOS|FxiOS|EdgiOS/.test(ua)?['Mở trang này bằng <b>Safari</b> (iPhone chỉ cài được từ Safari).','Bấm nút <b>Chia sẻ</b> ⬆ ở thanh dưới.','Kéo xuống, chọn <b>Thêm vào MH chính</b>, rồi bấm <b>Thêm</b>.']:['Bấm nút <b>Chia sẻ</b> ⬆ ở thanh dưới của Safari.','Kéo xuống, chọn <b>Thêm vào MH chính</b>.','Bấm <b>Thêm</b> ở góc trên bên phải.'])
+  :isAnd?['Mở trang này bằng <b>Chrome</b>.','Bấm menu <b>⋮</b> ở góc trên bên phải.','Chọn <b>Cài đặt ứng dụng</b> hoặc <b>Thêm vào màn hình chính</b>, rồi bấm <b>Cài đặt</b>.']
+  :['Mở trang này bằng <b>Chrome</b> hoặc <b>Edge</b>.','Bấm biểu tượng <b>cài đặt ⊕</b> ở cuối thanh địa chỉ (hoặc menu ⋮ → <b>Truyền, lưu và chia sẻ</b> → <b>Cài đặt trang dưới dạng ứng dụng</b>).','Bấm <b>Cài đặt</b>.'];
+  document.getElementById('hdL').innerHTML=L.map(x=>'<li>'+x+'</li>').join('');hd.style.display='flex'}
+document.getElementById('caiBtn').onclick=async()=>{if(dp){dp.prompt();try{await dp.userChoice}catch(e){}dp=null;cai.style.display='none'}else huongDan()};
+document.getElementById('caiX').onclick=()=>{cai.style.display='none';try{localStorage.setItem('cai_x_xd','1')}catch(e){}};
+document.getElementById('hdOk').onclick=()=>{hd.style.display='none'};
+window.addEventListener('appinstalled',()=>{cai.style.display='none'});
+</script>
+</body>
+</html>
